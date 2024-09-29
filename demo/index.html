@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Card Demo</title>
+    <link rel="stylesheet" href="./demo-page.css">
+</head>
+<body>
+    <main>
+        <h1>Overview</h1>
+        <div class="overview"></div>
+        <h1>Examples</h1>
+        <article class="basic">
+            <header>Basic Example</header>
+            <div class="description">
+                <p>The <code>&lt;task-card&gt;</code> element's description can be set by using the <code>value</code> attribute.</p>
+                <p>Each of the three inputs on the <code>&lt;task-card&gt;</code> element can be set via an attribute.</p>
+                <p>In this example, the element's <code>value</code> attribute is set to "Hello World":</p>
+            </div>
+            <div class="example">
+                <task-card value="Hello World"></task-card>
+            </div>
+        </article>
+        <article class="events">
+            <header>Events</header>
+            <div class="description">
+                <p>Each of the <code>&lt;task-card&gt;</code> element's child inputs dispatch their own events and those events can be handled with common <code>addEventListener()</code> calls.</p>
+                <p>For convenience, the <code>&lt;task-card&gt;</code> element, itself, also dispatches the following events:</p>
+                <ul>
+                    <li><code>change</code></li>
+                    <li><code>remove</code></li>
+                </ul>
+                <p>The <code>change</code> event fires when any of the child inputs have their values updated. The <code>remove</code> event fires when the remove button is clicked.</p>
+                <p>In the following example, events are attached to both the <code>&lt;task-card&gt;</code> element and its child elements, to show the contrast. Attaching to one or the other is the reccommended practice.</p>
+            </div>
+            <div class="example">
+                <task-card value="Change the check (completion status), the color, or the input to dispatch an event."></task-card>
+                <div class="log">
+                    <header>
+                        <span class="title">Event Log</span>
+                    </header>
+                    <ul></ul>
+                </div>
+            </div>
+            <script type="module">
+                const eventExample = document.querySelector('article.events task-card');
+                const eventsLog = document.querySelector('article.events .log ul')
+                document.addEventListener('DOMContentLoaded', () =>
+                {
+                    eventExample.addEventListener('change', (event) =>
+                    {
+                        const input = event.detail.target;
+                        logResult({ eventType: 'change', target: event.target.tagName, currentTarget: input.tagName, value: input.value })
+                    });
+                    eventExample.addEventListener('remove', (event) =>
+                    {
+                        logResult({ eventType: 'remove', target: event.target.tagName });
+                    });
+
+                    
+                    eventExample.findPart('is-finished').addEventListener('change', (event) =>
+                    {
+                        logResult({ eventType: 'change', target: event.target.tagName });
+                    });
+                    eventExample.findPart('description').addEventListener('input', (event) =>
+                    {
+                        logResult({ eventType: 'input', target: event.target.tagName });
+                    });
+                    // alternative selector to demonstrate skipping custom `findPart` syntax sugar function
+                    // selecting with this verbose selector, and directly interacting with the shadowRoot are
+                    // are both unreccommended.
+                    eventExample.shadowRoot.querySelector('[part="color"]').addEventListener('change', (event) =>
+                    {
+                        logResult({ eventType: 'change', target: event.target.tagName });
+                    });
+                    eventExample.findPart('remove-button').addEventListener('click', (event) =>
+                    {
+                        logResult({ eventType: 'click', target: event.target.tagName });
+                    });
+                });
+                function logResult(result)
+                {
+                    const entry = document.createElement('li');
+                    entry.textContent = JSON.stringify(result, null, 2);
+                    entry.classList.add('entry');
+                    eventsLog.append(entry);
+                }
+            </script>
+        </article>
+        <article class="custom-description">
+            <header>Replace Input</header>
+            <div class="description">
+                <p>The <code>&lt;task-card&gt;</code> element's description input can be replaced by providing an element for the <code>description</code> slot.</p>
+                <p><em>("slotting" is done by setting an element's <code>slot</code> attribute to the matching slot name. In this case, that slot name is "description")</em></p>
+                <p>In this example, the <code>&lt;task-card&gt;</code> element has a child <code>&lt;textarea&gt;</code> element which has its <code>slot</code> attribute set to <code>description</code>:</p>
+            </div>
+            <div class="example">
+                <task-card value="Hello World">
+                    <textarea slot="description">Default Value</textarea>
+                </task-card>
+            </div>
+        </article>
+        <article class="find-part">
+            <header>Find Part</header>
+            <div class="description">
+                <p>The <code>&lt;task-card&gt;</code> element has multiple input elements in its shadow DOM which are available via querying the element's shadowRoot reference.</p>
+                <p>Due to the private nature of the shadowRoot, best practices reccommend a helper function to access these managed inputs.</p>
+                <p>The <code>&lt;task-card&gt;</code> element provides the <code>findPart(partName)</code> helper function which will find any element in the shadowRoot which has a <code>part</code> attribute value that matches the provided string parameter.</p>
+            </div>
+            <div class="example">
+                <task-card value="Change the check (completion status), the color, or the input to dispatch an event."></task-card>
+                <div class="actions">
+                    <button type="button">Randomize Color</button>
+                    <button type="button">Toggle Is Finished</button>
+                    <button type="button">Clear Description</button>
+                </div>
+                <div class="log">
+                    <header>
+                        <span class="title">Event Log</span>
+                        <ul></ul>
+                    </header>
+                </div>
+            </div>
+            <script type="module">
+                const findPartExample = document.querySelector('article.find-part task-card');
+                document.addEventListener('DOMContentLoaded', () =>
+                {
+                    findPartExample.findPart('color');
+                    findPartExample.findPart('is-finished');
+                    findPartExample.findPart('description');
+                    findPartExample.findPart('remove-button').addEventListener('click', (event) =>
+                    {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        return false;
+                    });
+                });
+            </script>
+        </article>
+    </main>
+    <script type="module" src="../vanilla/task-card.js"></script>
+</body>
+</html>
