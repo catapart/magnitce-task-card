@@ -25,6 +25,11 @@ COMPONENT_STYLESHEET.replaceSync(task_card_default);
 var COMPONENT_TAG_NAME = "task-card";
 var TaskCardElement = class extends HTMLElement {
   componentParts = /* @__PURE__ */ new Map();
+  /**
+   * Query for a part in the element's shadow DOM and then caches it so that the next time this function is called, the cached element can be provided.
+   * @param key the part value of the child element to query for
+   * @returns the requested `HTMLElement` or `undefined`
+   */
   getPart(key) {
     if (this.componentParts.get(key) == null) {
       const part = this.shadowRoot.querySelector(`[part="${key}"]`);
@@ -34,6 +39,11 @@ var TaskCardElement = class extends HTMLElement {
     }
     return this.componentParts.get(key);
   }
+  /**
+   * Query for a part in the element's shadow DOM
+   * @param key the part value of the child element to query for
+   * @returns the requested `HTMLElement` or `undefined`
+   */
   findPart(key) {
     return this.shadowRoot.querySelector(`[part="${key}"]`);
   }
@@ -77,9 +87,9 @@ var TaskCardElement = class extends HTMLElement {
     }
     return element;
   }
-  static observedAttributes = ["value", "description", "placeholder", "color", "is-finished"];
+  static observedAttributes = ["value", "description", "color", "is-finished"];
   attributeChangedCallback(attributeName, _oldValue, newValue) {
-    if (attributeName == "value" || attributeName == "description" && newValue != null && newValue.trim() != "") {
+    if (attributeName == "value" || attributeName == "description") {
       this.findPart("description").textContent = newValue;
     } else if (attributeName == "is-finished") {
       this.findPart("is-finished").checked = newValue == "true";

@@ -39,6 +39,11 @@ export class TaskCardElement extends HTMLElement
 {
 
     componentParts: Map<string, HTMLElement> = new Map();
+    /**
+     * Query for a part in the element's shadow DOM and then caches it so that the next time this function is called, the cached element can be provided.
+     * @param key the part value of the child element to query for
+     * @returns the requested `HTMLElement` or `undefined`
+     */
     getPart<T extends HTMLElement = HTMLElement>(key: string)
     {
         if(this.componentParts.get(key) == null)
@@ -49,6 +54,11 @@ export class TaskCardElement extends HTMLElement
 
         return this.componentParts.get(key) as T;
     }
+    /**
+     * Query for a part in the element's shadow DOM
+     * @param key the part value of the child element to query for
+     * @returns the requested `HTMLElement` or `undefined`
+     */
     findPart<T extends HTMLElement = HTMLElement>(key: string) { return this.shadowRoot!.querySelector(`[part="${key}"]`) as T; }
 
     get value()
@@ -109,17 +119,13 @@ export class TaskCardElement extends HTMLElement
         return element;
     }
 
-    static observedAttributes = [ 'value', 'description', 'placeholder', 'color', 'is-finished' ];
+    static observedAttributes = [ 'value', 'description', 'color', 'is-finished' ];
     attributeChangedCallback(attributeName: string, _oldValue: string, newValue: string) 
     {
-        if(attributeName == "value" || attributeName == "description" && newValue != null && newValue.trim() != "")
+        if(attributeName == "value" || attributeName == "description")
         {
             this.findPart('description').textContent = newValue;
         }
-        // else if(attributeName == "placeholder")
-        // {
-        //     this.findPart('description').placeholder = newValue;
-        // }
         else if(attributeName == "is-finished")
         {
             this.findPart<HTMLInputElement>('is-finished').checked = (newValue == "true");

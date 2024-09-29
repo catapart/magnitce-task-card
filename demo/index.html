@@ -9,7 +9,13 @@
 <body>
     <main>
         <h1>Overview</h1>
-        <div class="overview"></div>
+        <div class="overview">
+            <div class="description">
+                <h2>Description</h2>
+                <p>The <code>&lt;task-card&gt;</code> element is a collection of a text-like input, a checkbox input, a color input, and a remove button, arranged for the purpose of listing them as tasks to be "completed".</p>
+                <p>The element provides access to the inputs via the attributes, and dispatches events when the inputs change or the remove button is invoked.</p>
+            </div>
+        </div>
         <h1>Examples</h1>
         <article class="basic">
             <header>Basic Example</header>
@@ -110,30 +116,49 @@
             </div>
             <div class="example">
                 <task-card value="Change the check (completion status), the color, or the input to dispatch an event."></task-card>
-                <div class="actions">
-                    <button type="button">Randomize Color</button>
-                    <button type="button">Toggle Is Finished</button>
-                    <button type="button">Clear Description</button>
-                </div>
-                <div class="log">
-                    <header>
-                        <span class="title">Event Log</span>
-                        <ul></ul>
-                    </header>
+                <div class="actions" style="margin-top: 1em;">
+                    <button type="button" id="randomize-color">Randomize Color</button>
+                    <button type="button" id="toggle-is-finished">Toggle Is Finished</button>
+                    <button type="button" id="clear-description">Clear Description</button>
                 </div>
             </div>
             <script type="module">
-                const findPartExample = document.querySelector('article.find-part task-card');
                 document.addEventListener('DOMContentLoaded', () =>
                 {
-                    findPartExample.findPart('color');
-                    findPartExample.findPart('is-finished');
-                    findPartExample.findPart('description');
-                    findPartExample.findPart('remove-button').addEventListener('click', (event) =>
+                    const randomizeColorButton = document.querySelector('#randomize-color');
+                    const toggleIsFinishedButton = document.querySelector('#toggle-is-finished');
+                    const clearDescriptionButton = document.querySelector('#clear-description');
+
+                    const findPartExample = document.querySelector('article.find-part task-card');
+                    const findPartColor = findPartExample.findPart('color');
+                    const findPartIsFinished = findPartExample.findPart('is-finished');
+                    const findPartDescription = findPartExample.findPart('description');
+
+                    const colors = [
+                        '#000000',
+                        '#FF0000',
+                        '#FFFF00',
+                        '#00FF00',
+                        '#00FFFF',
+                        '#0000FF',
+                        '#FFFFFF',
+                    ];
+
+                    randomizeColorButton.addEventListener('click', () =>
                     {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        return false;
+                        findPartColor.value = colors[Math.floor(Math.random()*colors.length)];
+                    });
+                    toggleIsFinishedButton.addEventListener('click', () =>
+                    {
+                        findPartIsFinished.checked = !findPartIsFinished.checked;
+                    });
+                    clearDescriptionButton.addEventListener('click', () =>
+                    {
+                        findPartExample.setAttribute('description', "");
+                        // this would work:
+                        // findPartDescription.textContent = "";
+                        // but if you replaced the description element (using the slot), it would stop working.
+                        // setting the card's attribute is more comprehensive.
                     });
                 });
             </script>
