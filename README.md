@@ -1,9 +1,7 @@
 # `<task-card>`
 A custom `HTMLElement` that represents a task and provides an api for task properties.
 
-Includes subrouting, transitions, events, dialog routes, route links, and route buttons.
-
-Package size: ~19kb minified, ~33kb verbose.
+Package size: ~6kb minified, ~8kb verbose.
 
 ## Quick Reference
 ```html
