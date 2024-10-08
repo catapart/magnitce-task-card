@@ -186,13 +186,13 @@ task-card::part(description)
 For a list of all part names, see the [parts](#parts) section.
 
 ## `<task-list>` and `<task-board>` elements
-The `<task-card>` element is designed as a standalone element and has some utility on its own, but it was designed alongside two other "parent" elements: the [`<task-list>`]() and [`<task-board>`]() elements.
+The `<task-card>` element is designed as a standalone element and has some utility on its own, but it was designed alongside two other "parent" elements: the [`<task-list>`](https://github.com/catapart/magnitce-task-list) and [`<task-board>`](https://github.com/catapart/magnitce-task-board) elements.
 
 Taken together, a `<task-list>` element with a `<task-card>` element as its child is analagous to the `select` element and the `option` element. Since the `<task-card>` element can be used with multiple parents, it didn't make sense to build them as a packaged library, so the `<task-card>` element was developed to be a standalone element for generalized implementation.
 
 The expected "parent" implementation informs why the `<task-card>` element's remove button doesn't actually remove it from the DOM. This structure seemed to be more agnostic, and it was hard to imagine that a developer would want to use this particular library, but **not** want to use any kind of management javascript for it.
 
-So, if you are implementing a custom management solution: this element sticks to messaging, rather than direct effects. Otherwise, this element can be fully managed either in simple lists, or within a full task board, by using either the [`<task-list>`]() or [`<task-board>`]() element.
+So, if you are implementing a custom management solution: this element sticks to messaging, rather than direct effects. Otherwise, this element can be fully managed either in simple lists, or within a full task board, by using either the [`<task-list>`](https://github.com/catapart/magnitce-task-list) or [`<task-board>`](https://github.com/catapart/magnitce-task-board) element.
 
 ## License
 This library is in the public domain. You do not need permission, nor do you need to provide attribution, in order to use, modify, reproduce, publish, or sell it or any works using it or derived from it.
