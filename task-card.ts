@@ -77,25 +77,25 @@ export class TaskCardElement extends HTMLElement
 
         this.findPart('color').addEventListener('change', (event) =>
         {
-            this.dispatchEvent(new CustomEvent('change', { detail: { target: event.target }}));
+            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
         });
         this.findPart('is-finished').addEventListener('change', (event) =>
         {
-            this.dispatchEvent(new CustomEvent('change', { detail: { target: event.target }}));
+            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
         });
         this.findPart('description').addEventListener('blur', (event) =>
         {
             if(this.value != this.#previousValue)
             {
                 // prevents race conditions
-                this.dispatchEvent(new CustomEvent('change', { detail: { target: event.target }}));
+                this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
             }
             this.#previousValue = this.value;
         });
 
         this.findPart('remove-button').addEventListener('click', () =>
         {
-            this.dispatchEvent(new CustomEvent('remove'));
+            this.dispatchEvent(new CustomEvent('remove', { bubbles: true, cancelable: true }));
         });
     }
 
