@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.3
+
+### Patch Changes
+
+- 804e106: added bubbling and cancellation to events
+
 ## 0.0.2
 
 ### Patch Changes
