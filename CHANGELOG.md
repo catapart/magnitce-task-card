@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.6
+
+### Patch Changes
+
+- 89f5ccd: updated description text overflow style
+
 ## 0.0.5
 
 ### Patch Changes
