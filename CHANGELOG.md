@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.5
+
+### Patch Changes
+
+- e542c87: refactored description overflow
+
 ## 0.0.4
 
 ### Patch Changes
