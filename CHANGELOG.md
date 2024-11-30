@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.7
+
+### Patch Changes
+
+- 7f9c926: allowed overflow on y axis
+
 ## 0.0.6
 
 ### Patch Changes
