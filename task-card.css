@@ -77,7 +77,7 @@
     font-family: sans-serif;
     display: block;
     border-radius: 2px;
-    overflow: auto hidden;
+    overflow: auto;
     overflow-wrap: normal;
 
 }
