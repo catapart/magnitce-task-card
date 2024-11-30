@@ -67,16 +67,18 @@
     --input-border-color: rgb(118, 118, 118);
 
     min-height: 1.2em;
-    min-width: 20ch;
+    min-width: 24px;
     resize: both;
     background-color: field;
     color: fieldtext;
     border: solid 1px var(--input-border-color, fieldtext);
-    padding: 3px 5px;
+    padding: 3px 15px 3px 5px;
     font-size: 12px;
     font-family: sans-serif;
     display: block;
     border-radius: 2px;
+    white-space: pre;
+    overflow: auto;
 
 }
 @media (prefers-color-scheme: dark) 

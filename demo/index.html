@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Card Demo</title>
+    <title>&lt;task-card&gt; Demo</title>
     <link rel="stylesheet" href="./demo-page.css">
-</head>
-<body>
-    <main>
-        <h1>Overview</h1>
-        <div class="overview">
-            <div class="description">
-                <h2>Description</h2>
-                <p>The <code>&lt;task-card&gt;</code> element is a collection of a text-like input, a checkbox input, a color input, and a remove button, arranged for the purpose of listing them as tasks to be "completed".</p>
-                <p>The element provides access to the inputs via the attributes, and dispatches events when the inputs change or the remove button is invoked.</p>
-            </div>
+    <link rel="stylesheet" href="./demo.css">
+    <link rel="stylesheet" href="./browser-mockup.css">
+  </head>
+  <body>
+    <main class="centered-single-column">
+      <header class="full-width">
+        <div class="content centered-single-column">
+          <h1>The <code>task-card</code> element</h1>
         </div>
-        <h1>Examples</h1>
+      </header>
+        <article class="overview">
+            <h2>Overview</h2>
+            <p>The <code>&lt;task-card&gt;</code> element is a collection of a text-like input, a checkbox input, a color input, and a remove button, arranged for the purpose of listing them as tasks to be "completed".</p>
+            <p>The element provides access to the inputs via the attributes, and dispatches events when the inputs change or the remove button is invoked.</p>
+        </article>
         <article class="basic">
-            <header>Basic Example</header>
+            <h2>Basic Example</h2>
             <div class="description">
                 <p>The <code>&lt;task-card&gt;</code> element's description can be set by using the <code>value</code> attribute.</p>
                 <p>Each of the three inputs on the <code>&lt;task-card&gt;</code> element can be set via an attribute.</p>
@@ -29,7 +32,7 @@
             </div>
         </article>
         <article class="events">
-            <header>Events</header>
+            <h2>Events</h2>
             <div class="description">
                 <p>Each of the <code>&lt;task-card&gt;</code> element's child inputs dispatch their own events and those events can be handled with common <code>addEventListener()</code> calls.</p>
                 <p>For convenience, the <code>&lt;task-card&gt;</code> element, itself, also dispatches the following events:</p>
@@ -85,17 +88,21 @@
                         logResult({ eventType: 'click', target: event.target.tagName });
                     });
                 });
+          
                 function logResult(result)
                 {
-                    const entry = document.createElement('li');
-                    entry.textContent = JSON.stringify(result, null, 2);
-                    entry.classList.add('entry');
-                    eventsLog.append(entry);
+                    const entryElement = document.createElement('li');
+                    const codeElement = document.createElement('code');
+                    const preElement = document.createElement('pre');
+                    preElement.textContent = JSON.stringify(result, null, 2);
+                    codeElement.append(preElement);
+                    entryElement.append(codeElement);
+                    eventsLog.append(entryElement);
                 }
             </script>
         </article>
         <article class="custom-description">
-            <header>Replace Input</header>
+            <h2>Replace Input</h2>
             <div class="description">
                 <p>The <code>&lt;task-card&gt;</code> element's description input can be replaced by providing an element for the <code>description</code> slot.</p>
                 <p><em>("slotting" is done by setting an element's <code>slot</code> attribute to the matching slot name. In this case, that slot name is "description")</em></p>
@@ -108,7 +115,7 @@
             </div>
         </article>
         <article class="find-part">
-            <header>Find Part</header>
+            <h2>Find Part</h2>
             <div class="description">
                 <p>The <code>&lt;task-card&gt;</code> element has multiple input elements in its shadow DOM which are available via querying the element's shadowRoot reference.</p>
                 <p>Due to the private nature of the shadowRoot, best practices reccommend a helper function to access these managed inputs.</p>
