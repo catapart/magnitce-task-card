@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.8
+
+### Patch Changes
+
+- bc21875: changed color input container to label element
+
 ## 0.0.7
 
 ### Patch Changes
