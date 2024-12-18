@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.10
+
+### Patch Changes
+
+- a3c1a55: removed button hover styles
+
 ## 0.0.9
 
 ### Patch Changes
