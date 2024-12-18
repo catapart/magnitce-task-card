@@ -104,6 +104,14 @@
     justify-content: center;
     margin:1em .5em 1em 0;
 }
+[part="remove-button"]:hover
+{
+    background: var(--button-highlight-background);
+    color: var(--button-highlight-text);
+    border: var(--button-highlight-border);
+    --icon-primary-color: var(--icon-highlight-primary-color);
+    --icon-secondary-color: var(--icon-highlight-secondary-color);
+}
 [part="remove-icon"]
 {
     width: var(--icon-width, var(--icon-size, 12px));
