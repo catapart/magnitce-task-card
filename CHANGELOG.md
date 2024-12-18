@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.9
+
+### Patch Changes
+
+- a8eb5b7: added highlight styles for buttons and icons
+
 ## 0.0.8
 
 ### Patch Changes
