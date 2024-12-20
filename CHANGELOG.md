@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.12
+
+### Patch Changes
+
+- 0a89093: implemented custom check slot
+
 ## 0.0.11
 
 ### Patch Changes
