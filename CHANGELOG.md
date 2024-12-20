@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.15
+
+### Patch Changes
+
+- 3946054: updated finished indicator to a label for finished checkbox
+
 ## 0.0.14
 
 ### Patch Changes
