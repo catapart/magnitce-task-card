@@ -70,6 +70,13 @@
 {
     display: none;
 }
+[part="is-finished"]:checked ~ [part="finished-indicator"]
+{
+    background-image: var(--finished-background-image, none);
+    background-color: var(--finished-background, transparent);
+    border: var(--finished-border, solid 1px transparent);
+    color: var(--finished-color);
+}
 [part="is-finished"]:checked ~ [part="finished-indicator"] ::slotted([slot="custom-check"])
 {
     display: var(--custom-check-display, block);
