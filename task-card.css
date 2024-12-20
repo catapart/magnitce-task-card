@@ -54,6 +54,12 @@
     margin: 1em .5em;
 }
 
+[part="finished-indicator"]
+{
+    margin-block: .5em;
+}
+
+
 
 [part="is-finished"]:checked + slot [part="description"]
 ,[part="is-finished"]:checked + ::slotted([slot="description"])
