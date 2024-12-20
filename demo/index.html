@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;task-card&gt; Demo</title>
     <link rel="stylesheet" href="./demo-page.css">
+    <style>
+        .custom-color::part(color-container)
+        {
+            
+        }
+    </style>
   </head>
   <body>
     <main class="centered-single-column">
@@ -27,7 +33,7 @@
             </div>
             <div class="example">
                 <task-card value="Hello World"></task-card>
-                <task-card value="Custom Check">
+                <task-card value="Custom Check" class="stacked">
                     <div slot="custom-check">$</div>
                 </task-card>
             </div>
