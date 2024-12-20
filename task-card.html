@@ -4,8 +4,8 @@
 <label part="color-container">
     <input type="color" part="color" value="#919191" />
 </label>
-<span part="finished-indicator"></span>
 <input type="checkbox" part="is-finished" title="Finished?" />
+<span part="finished-indicator"><slot name="custom-check"></slot></span>
 <slot name="description"><div part="description" contenteditable="true"></div></slot>
 <button type="button" part="remove-button" title="Delete">
     <slot name="remove-button-label">

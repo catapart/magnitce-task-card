@@ -60,11 +60,19 @@
 }
 
 
-
-[part="is-finished"]:checked + slot [part="description"]
-,[part="is-finished"]:checked + ::slotted([slot="description"])
+[part="is-finished"]:checked ~ slot [part="description"]
+,[part="is-finished"]:checked ~ ::slotted([slot="description"])
 {
     text-decoration: line-through;
+}
+
+::slotted([slot="custom-check"])
+{
+    display: none;
+}
+[part="is-finished"]:checked ~ [part="finished-indicator"] ::slotted([slot="custom-check"])
+{
+    display: var(--custom-check-display, block);
 }
 
 [part="description"]
