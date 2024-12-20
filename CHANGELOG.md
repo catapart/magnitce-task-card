@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.13
+
+### Patch Changes
+
+- 2ce059f: added custom finished indicator variables
+
 ## 0.0.12
 
 ### Patch Changes
