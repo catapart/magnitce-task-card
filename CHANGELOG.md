@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.11
+
+### Patch Changes
+
+- 12b5851: added finished indicator part
+
 ## 0.0.10
 
 ### Patch Changes
