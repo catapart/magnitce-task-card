@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.14
+
+### Patch Changes
+
+- b32d13f: refactored finished indicator variables
+
 ## 0.0.13
 
 ### Patch Changes
