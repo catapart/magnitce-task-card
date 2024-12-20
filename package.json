@@ -1,6 +1,6 @@
 {
   "name": "@magnit-ce/task-card",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A custom html element that represents a task and provides an api for task properties.",
   "type": "module",
   "main": "dist/task-card.js",
