@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.17
+
+### Patch Changes
+
+- 0c24f7c: updated finished-indicator to use non-finished vars
+
 ## 0.0.16
 
 ### Patch Changes
