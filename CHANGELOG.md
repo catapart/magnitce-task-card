@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.16
+
+### Patch Changes
+
+- f5a58d7: added stacked mode
+
 ## 0.0.15
 
 ### Patch Changes
