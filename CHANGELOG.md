@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.18
+
+### Patch Changes
+
+- 728fcab: refactored event data
+
 ## 0.0.17
 
 ### Patch Changes
