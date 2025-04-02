@@ -39,31 +39,21 @@ export class TaskCardElement extends HTMLElement
 {
 
     componentParts: Map<string, HTMLElement> = new Map();
-    /**
-     * Query for a part in the element's shadow DOM and then caches it so that the next time this function is called, the cached element can be provided.
-     * @param key the part value of the child element to query for
-     * @returns the requested `HTMLElement` or `undefined`
-     */
-    getPart<T extends HTMLElement = HTMLElement>(key: string)
+    getElement<T extends HTMLElement = HTMLElement>(id: string)
     {
-        if(this.componentParts.get(key) == null)
+        if(this.componentParts.get(id) == null)
         {
-            const part = this.shadowRoot!.querySelector(`[part="${key}"]`) as HTMLElement;
-            if(part != null) { this.componentParts.set(key, part); }
+            const part = this.findElement(id);
+            if(part != null) { this.componentParts.set(id, part); }
         }
 
-        return this.componentParts.get(key) as T;
+        return this.componentParts.get(id) as T;
     }
-    /**
-     * Query for a part in the element's shadow DOM
-     * @param key the part value of the child element to query for
-     * @returns the requested `HTMLElement` or `undefined`
-     */
-    findPart<T extends HTMLElement = HTMLElement>(key: string) { return this.shadowRoot!.querySelector(`[part="${key}"]`) as T; }
+    findElement<T extends HTMLElement = HTMLElement>(id: string) { return this.shadowRoot!.getElementById(id) as T; }
 
     get value()
     {
-        return this.findPart('description').textContent;
+        return this.findElement('description').textContent;
     }
 
     #previousValue: string|null = null;
@@ -75,28 +65,59 @@ export class TaskCardElement extends HTMLElement
         this.shadowRoot!.innerHTML = html;
         this.shadowRoot!.adoptedStyleSheets.push(COMPONENT_STYLESHEET);
 
-        this.findPart('color').addEventListener('change', (event) =>
+        this.findElement('custom-check').addEventListener('slotchange', (event) =>
         {
-            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
+            const customCheck = (event.target! as HTMLSlotElement).assignedNodes()[0];
+            this.classList.toggle('custom-checkbox', (customCheck != null));
         });
-        this.findPart('is-finished').addEventListener('change', (event) =>
+
+        this.findElement('color').addEventListener('change', (event) =>
         {
-            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
+            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('color') }));
         });
-        this.findPart('description').addEventListener('blur', (event) =>
+        this.findElement('is-finished').addEventListener('change', (event) =>
+        {
+            this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('is-finished') }));
+        });
+        this.findElement('description').addEventListener('blur', (event) =>
         {
             if(this.value != this.#previousValue)
             {
                 // prevents race conditions
-                this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, detail: { target: event.target }}));
+                this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('description') }));
             }
             this.#previousValue = this.value;
         });
 
-        this.findPart('remove-button').addEventListener('click', () =>
+        this.findElement('remove-button').addEventListener('click', (event) =>
         {
-            this.dispatchEvent(new CustomEvent('remove', { bubbles: true, cancelable: true }));
+            this.dispatchEvent(new CustomEvent('remove', { bubbles: true, cancelable: true, composed: true }));
         });
+
+        this.#applyPartAttributes();
+    }
+    #applyPartAttributes()
+    {
+        const identifiedElements = [...this.shadowRoot!.querySelectorAll('[id]')];
+        for(let i = 0; i < identifiedElements.length; i++)
+        {
+            identifiedElements[i].part.add(identifiedElements[i].id);
+        }
+        const classedElements = [...this.shadowRoot!.querySelectorAll('[class]')];
+        for(let i = 0; i < classedElements.length; i++)
+        {
+            classedElements[i].part.add(...classedElements[i].classList);
+        }
+    }
+
+    #getCardData(currentUpdate: string)
+    {
+        return { 
+            currentUpdate,
+            color: this.findElement<HTMLInputElement>('color').value,
+            isFinished: this.findElement<HTMLInputElement>('is-finished').checked,
+            description: this.findElement<HTMLInputElement>('description').textContent,
+        };
     }
 
     static create(props?: TaskCardProperties)
@@ -124,15 +145,15 @@ export class TaskCardElement extends HTMLElement
     {
         if(attributeName == "value" || attributeName == "description")
         {
-            this.findPart('description').textContent = newValue;
+            this.findElement('description').textContent = newValue;
         }
         else if(attributeName == "is-finished")
         {
-            this.findPart<HTMLInputElement>('is-finished').checked = (newValue == "true");
+            this.findElement<HTMLInputElement>('is-finished').checked = (newValue == "true");
         }
         else if(attributeName == "color")
         {
-            this.findPart<HTMLInputElement>('color').value = newValue;
+            this.findElement<HTMLInputElement>('color').value = newValue;
         }
     }
 }

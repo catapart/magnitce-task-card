@@ -66,8 +66,8 @@
                 {
                     eventExample.addEventListener('change', (event) =>
                     {
-                        const input = event.detail.target;
-                        logResult({ eventType: 'change', target: event.target.tagName, currentTarget: input.tagName, value: input.value })
+                        const detail = event.detail;
+                        logResult({ eventType: 'change', detail })
                     });
                     eventExample.addEventListener('remove', (event) =>
                     {
@@ -75,22 +75,22 @@
                     });
 
                     
-                    eventExample.findPart('is-finished').addEventListener('change', (event) =>
+                    eventExample.findElement('is-finished').addEventListener('change', (event) =>
                     {
                         logResult({ eventType: 'change', target: event.target.tagName });
                     });
-                    eventExample.findPart('description').addEventListener('input', (event) =>
+                    eventExample.findElement('description').addEventListener('input', (event) =>
                     {
                         logResult({ eventType: 'input', target: event.target.tagName });
                     });
-                    // alternative selector to demonstrate skipping custom `findPart` syntax sugar function
+                    // alternative selector to demonstrate skipping custom `findElement` syntax sugar function
                     // selecting with this verbose selector, and directly interacting with the shadowRoot are
                     // are both unreccommended.
-                    eventExample.shadowRoot.querySelector('[part="color"]').addEventListener('change', (event) =>
+                    eventExample.shadowRoot.querySelector('#color').addEventListener('change', (event) =>
                     {
                         logResult({ eventType: 'change', target: event.target.tagName });
                     });
-                    eventExample.findPart('remove-button').addEventListener('click', (event) =>
+                    eventExample.findElement('remove-button').addEventListener('click', (event) =>
                     {
                         logResult({ eventType: 'click', target: event.target.tagName });
                     });
@@ -144,9 +144,9 @@
                     const clearDescriptionButton = document.querySelector('#clear-description');
 
                     const findPartExample = document.querySelector('article.find-part task-card');
-                    const findPartColor = findPartExample.findPart('color');
-                    const findPartIsFinished = findPartExample.findPart('is-finished');
-                    const findPartDescription = findPartExample.findPart('description');
+                    const findPartColor = findPartExample.findElement('color');
+                    const findPartIsFinished = findPartExample.findElement('is-finished');
+                    const findPartDescription = findPartExample.findElement('description');
 
                     const colors = [
                         '#000000',

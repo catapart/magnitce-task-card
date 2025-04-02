@@ -24,18 +24,8 @@ declare const COMPONENT_TAG_NAME = "task-card";
 declare class TaskCardElement extends HTMLElement {
     #private;
     componentParts: Map<string, HTMLElement>;
-    /**
-     * Query for a part in the element's shadow DOM and then caches it so that the next time this function is called, the cached element can be provided.
-     * @param key the part value of the child element to query for
-     * @returns the requested `HTMLElement` or `undefined`
-     */
-    getPart<T extends HTMLElement = HTMLElement>(key: string): T;
-    /**
-     * Query for a part in the element's shadow DOM
-     * @param key the part value of the child element to query for
-     * @returns the requested `HTMLElement` or `undefined`
-     */
-    findPart<T extends HTMLElement = HTMLElement>(key: string): T;
+    getElement<T extends HTMLElement = HTMLElement>(id: string): T;
+    findElement<T extends HTMLElement = HTMLElement>(id: string): T;
     get value(): string | null;
     constructor();
     static create(props?: TaskCardProperties): TaskCardElement;
