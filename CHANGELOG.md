@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.20
+
+### Patch Changes
+
+- 1959a3e: added finished class and part to indicator
+
 ## 0.0.19
 
 ### Patch Changes
