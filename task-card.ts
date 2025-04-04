@@ -156,7 +156,13 @@ export class TaskCardElement extends HTMLElement
         }
         else if(attributeName == "is-finished")
         {
-            this.findElement<HTMLInputElement>('is-finished').checked = (newValue == "true");
+            const finished = (newValue == "true");
+            this.findElement<HTMLInputElement>('is-finished').checked = finished;
+            this.classList.toggle('finished', finished);
+            this.part.toggle('finished', finished);
+            const indicator = this.findElement('finished-indicator');
+            indicator.classList.toggle('finished', finished);
+            indicator.part.toggle('finished', finished);
         }
         else if(attributeName == "color")
         {

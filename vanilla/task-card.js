@@ -114,7 +114,13 @@ var TaskCardElement = class extends HTMLElement {
     if (attributeName == "value" || attributeName == "description") {
       this.findElement("description").textContent = newValue;
     } else if (attributeName == "is-finished") {
-      this.findElement("is-finished").checked = newValue == "true";
+      const finished = newValue == "true";
+      this.findElement("is-finished").checked = finished;
+      this.classList.toggle("finished", finished);
+      this.part.toggle("finished", finished);
+      const indicator = this.findElement("finished-indicator");
+      indicator.classList.toggle("finished", finished);
+      indicator.part.toggle("finished", finished);
     } else if (attributeName == "color") {
       this.findElement("color").value = newValue;
     }
