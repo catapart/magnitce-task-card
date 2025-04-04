@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.21
+
+### Patch Changes
+
+- fcdeb08: fixed issue with finished class not matching finished state
+
 ## 0.0.20
 
 ### Patch Changes
