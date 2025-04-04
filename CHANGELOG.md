@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.19
+
+### Patch Changes
+
+- a2d32c1: implemented toggling finished class and part
+
 ## 0.0.18
 
 ### Patch Changes
