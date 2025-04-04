@@ -79,8 +79,8 @@ export class TaskCardElement extends HTMLElement
         {
             const isAllowed = this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('is-finished') }));
             if(isAllowed == false) { return; }
-            this.classList.toggle('finished');
-            const finished = this.classList.contains('finished');
+            const finished = (event.target as HTMLInputElement).checked;
+            this.classList.toggle('finished', finished);
             this.part.toggle('finished', finished);
             const indicator = this.findElement('finished-indicator');
             indicator.classList.toggle('finished', finished);

@@ -58,8 +58,12 @@ var TaskCardElement = class extends HTMLElement {
       if (isAllowed == false) {
         return;
       }
-      this.classList.toggle("finished");
-      this.part.toggle("finished", this.classList.contains("finished"));
+      const finished = event.target.checked;
+      this.classList.toggle("finished", finished);
+      this.part.toggle("finished", finished);
+      const indicator = this.findElement("finished-indicator");
+      indicator.classList.toggle("finished", finished);
+      indicator.part.toggle("finished", finished);
     });
     this.findElement("description").addEventListener("blur", (event) => {
       if (this.value != this.#previousValue) {
