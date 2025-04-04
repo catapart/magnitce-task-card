@@ -80,7 +80,11 @@ export class TaskCardElement extends HTMLElement
             const isAllowed = this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('is-finished') }));
             if(isAllowed == false) { return; }
             this.classList.toggle('finished');
-            this.part.toggle('finished', this.classList.contains('finished'));
+            const finished = this.classList.contains('finished');
+            this.part.toggle('finished', finished);
+            const indicator = this.findElement('finished-indicator');
+            indicator.classList.toggle('finished', finished);
+            indicator.part.toggle('finished', finished);
         });
         this.findElement('description').addEventListener('blur', (event) =>
         {
