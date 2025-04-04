@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.22
+
+### Patch Changes
+
+- 93cb1b1: fixed indicator display on attribute change
+
 ## 0.0.21
 
 ### Patch Changes
