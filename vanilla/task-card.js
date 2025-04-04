@@ -54,7 +54,12 @@ var TaskCardElement = class extends HTMLElement {
       this.dispatchEvent(new CustomEvent("change", { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData("color") }));
     });
     this.findElement("is-finished").addEventListener("change", (event) => {
-      this.dispatchEvent(new CustomEvent("change", { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData("is-finished") }));
+      const isAllowed = this.dispatchEvent(new CustomEvent("change", { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData("is-finished") }));
+      if (isAllowed == false) {
+        return;
+      }
+      this.classList.toggle("finished");
+      this.part.toggle("finished", this.classList.contains("finished"));
     });
     this.findElement("description").addEventListener("blur", (event) => {
       if (this.value != this.#previousValue) {
