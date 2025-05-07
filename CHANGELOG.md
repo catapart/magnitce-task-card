@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.23
+
+### Patch Changes
+
+- 842e8cc: updated stacked styles and added outline variable
+
 ## 0.0.22
 
 ### Patch Changes
