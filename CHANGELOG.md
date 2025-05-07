@@ -1,5 +1,11 @@
 # @magnit-ce/task-card
 
+## 0.0.24
+
+### Patch Changes
+
+- 2ec7965: fixes for custom checkbox
+
 ## 0.0.23
 
 ### Patch Changes
