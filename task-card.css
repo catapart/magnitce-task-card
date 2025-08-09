@@ -16,6 +16,7 @@
 }
 
 :host:has(#description:focus)
+,:host:has(#description:focus-visible)
 {
     outline: var(--task-focus-outline);
 }

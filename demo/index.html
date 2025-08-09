@@ -10,6 +10,15 @@
         {
             
         }
+
+        /* #example-1
+        {
+            --task-focus-outline: double 2px white;
+        }
+        #example-1::part(description)
+        {
+            outline: none;
+        } */
     </style>
   </head>
   <body>
@@ -32,7 +41,7 @@
                 <p>In this example, the element's <code>value</code> attribute is set to "Hello World":</p>
             </div>
             <div class="example">
-                <task-card value="Hello World"></task-card>
+                <task-card value="Hello World" id="example-1"></task-card>
                 <task-card value="Custom Check" class="stacked">
                     <div slot="custom-check" tabindex="0">$</div>
                 </task-card>
@@ -178,6 +187,6 @@
             </script>
         </article>
     </main>
-    <script type="module" src="../vanilla/task-card.js"></script>
+    <script type="module" src="./dist/task-card.js"></script>
 </body>
 </html>
