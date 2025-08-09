@@ -15,8 +15,7 @@
     }
 }
 
-:host:has(#description:focus)
-,:host:has(#description:focus-visible)
+:host(.focus)
 {
     outline: var(--task-focus-outline);
 }
