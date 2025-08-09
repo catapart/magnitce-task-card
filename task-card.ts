@@ -86,7 +86,13 @@ export class TaskCardElement extends HTMLElement
             indicator.classList.toggle('finished', finished);
             indicator.part.toggle('finished', finished);
         });
-        this.findElement('description').addEventListener('blur', (event) =>
+        const description = this.findElement('description');
+        description.addEventListener('focus', (event) =>
+        {
+            this.classList.add('focus');
+            this.part.add('focus');
+        });
+        description.addEventListener('blur', (event) =>
         {
             if(this.value != this.#previousValue)
             {
@@ -94,6 +100,9 @@ export class TaskCardElement extends HTMLElement
                 this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('description') }));
             }
             this.#previousValue = this.value;
+
+            this.classList.remove('focus');
+            this.part.remove('focus');
         });
 
         this.findElement('remove-button').addEventListener('click', (event) =>
