@@ -1,5 +1,12 @@
 # @magnit-ce/task-card
 
+## 0.0.25
+
+### Patch Changes
+
+- ec3141d: added focus-visible as selector to trigger task-focus-outline property
+- 8d404db: added focus class and part
+
 ## 0.0.24
 
 ### Patch Changes
