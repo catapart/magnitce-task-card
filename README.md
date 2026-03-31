@@ -1,198 +1,128 @@
-# `<task-card>`
-A custom `HTMLElement` that represents a task and provides an api for task properties.
+# Warning - Non-production package
+> [!WARNING]  
+> This project is being prepared for production, but is not ready to be used as a dependency for anything. There will be breaking changes and unrecoverable states. Do not use until this warning has been removed.
+> When the library reaches the `1.0.0` designation, that will be a production package. From that point, you can use the major version number (`1` in `1.0.0`) to recognize when breaking changes are introduced.
 
-Package size: ~6kb minified, ~8kb verbose.
-
-## Quick Reference
-```html
-<task-card value="Dishes" is-finished="true"></task-card>
-<task-card value="Laundry" color="#FF00FF"></task-card>
-<task-card value="Sweeping"></task-card>
-<task-card value="Cocktail (margarita:)">
-    <textarea slot="description">
-1 part  lime juice
-1 part  orange liqueur (grand marnier/cointreau/triple sec/etc)
-3 parts tequila
-
-1 twist of lime peel
-1 tbsp rimming salt
-
-1/2 shaker of ice
-1 serving glass "on the rocks" (a serving amount of ice)
-
-combine lime juice, orange liquer, and tequila in shaker
-shake well for 10-20 seconds
-strain liquid into serving glass
-express oils from lime peel and wet serving glass rim with them
-apply rimming salt to wetted rim of glass
-    </textarea>
-</task-card>
-<script type="module" src="/path/to/task-card[.min].js"></script>
-```
-
-## Demos
-https://catapart.github.io/magnitce-task-card/demo/
-
-## Support
-- Firefox
-- Chrome
-- Edge
-- <s>Safari</s> (Has not been tested; should be supported, based on custom element support)
-
-## Getting Started
- 1. [Install/Reference the library](#referenceinstall)
-
-### Reference/Install
-#### HTML Import (not required for vanilla js/ts; alternative to import statement)
-```html
-<script type="module" src="/path/to/task-card[.min].js"></script>
-```
-#### npm
-```cmd
-npm install @magnit-ce/task-card
-```
-
-### Import
-#### Vanilla js/ts
-```js
-import "/path/to/task-card[.min].js"; // if you didn't reference from a <script>, reference with an import like this
-
-import { TaskCard } from "/path/to/task-card[.min].js";
-```
-#### npm
-```js
-import "@magnit-ce/task-card"; // if you didn't reference from a <script>, reference with an import like this
-
-import { TaskCard } from "@magnit-ce/task-card";
-```
-
----
----
----
+# The `task-card` Custom Element
 
 ## Overview
-The `<task-card>` element is a collection of a text-like input, a checkbox input, a color input, and a remove button, arranged for the purpose of listing them as tasks to be "completed". The element provides access to the inputs via the attributes, and dispatches events when the inputs change or the remove button is invoked.
+A custom html element that provides sorting and management for custom task-card elements.
 
-## Attributes
-The `<task-card>` element's attributes can be used to set the values of its inputs. Each attribute, and the its effects, are listed below.
-|Attribute|Effect|
-|-|-|
-|`description`|Sets the text description of the task.|
-|`value`|Sets the text description of the task. (alternative to description)|
-|`placeholder`|Sets the text description's placeholder.|
-|`is-finished`|When present, sets the checkbox to `checked`. When not present, clears the `checked` property of the checkbox.|
-|`color`|Sets the color to the provided hex color value|
+|||||
+|-|-|-|-|
+|Package size, **verbose**:|~8kb|Package size, **minified**:|~6kb|
 
-## Parts
-The `<task-card>` element uses the `part` attribute to expose its shadow DOM content to the light DOM both for styling and selecting in javascript.
 
-|Part Name|Description|
-|-|-|
-|`handle`|An area before the color input. This area is unstyled in the library. This part is intended to be used with implementations that interact with dragging the `<task-card>` element.|
-|`color-container`|Holds the input that records the task's color.|
-|`color`|An input that displays a color on the task. Intended for basic "tagging" or "grouping".|
-|`is-finished`|An input that displays the completed status of the task.|
-|`description`|An input that displays the description of the task.|
-|`remove-button`|A button that dispatches a remove event on the task element.|
-|`remove-icon`|The icon that is used to represent removing the task element from the DOM.|
 
-### `findPart()` and `getPart()`
-In addition to being able to select an element from the `<task-card>` element's shadowRoot reference, this element provides a function for selecting one of its parts by using the `findPart()` function.
-
-In this example, the same part is selected with the default shadowRoot reference, and by using the `findPart()` function:
-```js
-const taskCard = document.querySelector('task-card');
-taskCard.findPart('description').addEventListener('input', (event) =>
-{
-    // queries the shadowRoot for an element with a part attribute of "description"
-});
-taskCard.shadowRoot.querySelector('[part="description"]').addEventListener('input', (event) =>
-{
-    // queries the shadowRoot for an element with a part attribute of "description"
-});
-```
-*(note: these two calls do exactly the same thing)*
-
-If one of this element's parts are going to be referenced frequently, the `<task-card>` element's `getPart()` function can be used instead.
-
-With `getPart()`, the element will be cached in RAM for immediate access witout having to perform a DOM query on the shadowRoot.
-```js
-const taskCard = document.querySelector('task-card');
-taskCard.getPart('description').addEventListener('input', (event) =>
-{
-    // gets cached element and, if null: queries the shadowRoot for an element with a part attribute of "description"
-});
-taskCard.shadowRoot.querySelector('[part="description"]').addEventListener('input', (event) =>
-{
-    // queries the shadowRoot for an element with a part attribute of "description"
-});
-```
-*(note: these two calls do two different things)*
-
-For event-based or initialization code, `findPart()` should be fine for performance. But if the `<task-card>` element is going to be updated multiple times in a row, the `getPart()` function will provide a smoother experience.
-
-## Events
-The `<task-card>` element's events are dispatched on the `<task-card>` element, but they provide the element that invoked the event using the `target` property on the `CustomEvent`'s `detail` property.
-
-The value of the content can be read directly from the input reference.
-
-In this example, the description input's value is read once using the `<task-card>` element's `change` event, and again using the description input's `input` event:
-```js
-const taskCard = document.querySelector('task-card');
-const taskDescription = taskCard.findPart('description');
-taskCard.addEventListener('change', (event) =>
-{
-    const input = event.detail.target;
-    if(input == taskDescription)
-    {
-        console.log(input.value);
-    }
-});
-taskDescription.addEventListener('input', (event) =>
-{
-    const input = event.target;
-    console.log(input.value);
-});
+## Quick Start
+```html
+<task-card value="Change the check (completion status), the color, or the input to dispatch an event."></task-card>
 ```
 
-|Event|Detail|
-|-|-|
-|`change`|`{ target: [HTMLInputElement] }`|
-|`remove`|`null`|
+## Links
+### Demo:
+https://catapart.github.io/magnitce-task-card
+### Documentation:
+https://catapart.github.io/magnitce-task-card/docs
+### Automated Testing:
+https://catapart.github.io/magnitce-task-card/tests.html
 
-## Slots
-The `<task-card>` element allows customization by using slots to inject custom html content into its shadowRoot.
+## Repo Notes
+This section provides instructions for how to use the repo to develop the library.
 
-A common use-case for the element's slots are to use the `description` slot to replace the type of text input the description uses. By setting a `<textarea>` element's `slot` value to `description`, the `<textarea>` element will be used to record the task's description.
-
-The `<task-card>` element exposes the following `slot`s: 
-|Slot Name|Description|Default
-|-|-|-|
-|`handle`|[*empty in library implementation*] Intended to be used for a "drag and drop" handle.|`HTMLSpanElement`|
-|`description`|Holds the input that records the task's description.|`HTMLDivElement[contenteditable]`|
-|`remove-button-label`|The content of the remove button.|`SVGElement`|
-
-## Styling
-Each of the elements in the `<task-card>` element's shadowRoot can be selected for styling, directly, by using the `::part()` selector.
-
-In this example, the `description` part is being selected for styling:
-```css
-task-card::part(description)
-{
-    /* styling */
-}
+### Installation
+Install the repo using a package manager:
+```cmd
+npm install
 ```
 
-For a list of all part names, see the [parts](#parts) section.
+### Configuration
+#### `tsconfig.json`
+The `tsconfig.json` file is generated by the `vite` dependency and has not been modified by this library. It uses strict linting and defaults to `es` modules, rather than `commonjs` modules. For more information about each of the `tsconfig.json` options, see the [tsconfig documentation](https://www.typescriptlang.org/tsconfig/).
+#### `vite.config`
+The `vite.config` file sets defaults options for the dev, build, and release processes, which allows the code to be packaged as a library (rather than a website) and defines custom inputs and outputs to exclude tests and create both `es` and `umd` modules. It also includes settings that allow for multiple file outputs with well-defined names and selective minification. For more information about configuring `vite`, see the [vite config documentation](https://vite.dev/config/).
+#### `vite.config.tests.ts`
+This specialized `vite.config` file defines custom inputs and outputs that include tests and then are packaged into the `test-runner` directory, rather than built to the `dist` directory.
 
-## `<task-list>` and `<task-board>` elements
-The `<task-card>` element is designed as a standalone element and has some utility on its own, but it was designed alongside two other "parent" elements: the [`<task-list>`](https://github.com/catapart/magnitce-task-list) and [`<task-board>`](https://github.com/catapart/magnitce-task-board) elements.
+### Development
+The `src` directory has a `dev` subdirectory that is intended for development. Developers can link to code-test files written in typescript, which allows for full type support while writing tests during development.
 
-Taken together, a `<task-list>` element with a `<task-card>` element as its child is analagous to the `select` element and the `option` element. Since the `<task-card>` element can be used with multiple parents, it didn't make sense to build them as a packaged library, so the `<task-card>` element was developed to be a standalone element for generalized implementation.
+Place development tests in the `tests` subdirectory of the `dev` directory. Use the suffix `.tests` to denote that a typescript file is a code-tests file. (*example: `interface.tests.ts`*)
 
-The expected "parent" implementation informs why the `<task-card>` element's remove button doesn't actually remove it from the DOM. This structure seemed to be more agnostic, and it was hard to imagine that a developer would want to use this particular library, but **not** want to use any kind of management javascript for it.
+Once tests have been added, the `build-tests` script can be used to compile the typescript tests into javascript tests that will be available for use in any `<code-tests>` or `<test-runner>` elements - including on the `tests.html` page.
 
-So, if you are implementing a custom management solution: this element sticks to messaging, rather than direct effects. Otherwise, this element can be fully managed either in simple lists, or within a full task board, by using either the [`<task-list>`](https://github.com/catapart/magnitce-task-list) or [`<task-board>`](https://github.com/catapart/magnitce-task-board) element.
+### Test Page
+The test page (`tests.html`) in the root directory can be used to demonstrate passing tests to users. 
 
-## License
-This library is in the public domain. You do not need permission, nor do you need to provide attribution, in order to use, modify, reproduce, publish, or sell it or any works using it or derived from it.
+Tests can be created in the `src/dev/tests` directory and developed using the dev page. When all tests are passing, use the `build-tests` script to transpile the `.ts` test files into `.js` test files that are deployed to the `public/tests` directory, which can be referenced by the `tests.html` page.
+
+The test page will also expect a reference to the library file, which won't exist until the `build` script has been run. If running the project causes errors, check the test page to either remove the script tags requesting the library file, or build the library to provide the test page with its requested source file.
+
+### Scripts
+#### `dev`
+Use `vite` to begin a server with Hot Module Replacement, which will automatically reload any time a change in a source file is saved.
+#### `build`
+Use `vite` to transpile the source code into code chunks or library files. Files are output into the `dist` directory by default.
+#### `preview`
+Use `vite` to serve the `dist` directory. Useful for non-library projects, where the `dist` directory will contain an `index.html` file, or other browse-able entry point.
+#### `build-tests`
+Use `vite` to transpile all files with a `.tests.[ts|js|tsx|jsx]` extension into the `public/tests` subdirectory. Creates javascript files that can be served to the `<test-runner>` and `<code-tests>` components, which are included in the `public/libs` subdirectory.
+#### `changeset`
+Runs the `npx @changesets/cli` command to create a new changeset which will prepare the library to be published.
+#### `release`
+Use `vite` to transpile the source code and then use `changesets` to begin the publication procedure for the repo environment (github or gitlab).  
+If this script is run during CI/CD for the `main` branch, the library is published to [npm](https://www.npmjs.com/). If it is run during CI/CD for any other branch, the library is linted and compiled. It is expected that this command will *only* be used by a CI/CD pipeline, and **never** by a library dev. Running the `release` script on a local codebase is not supported.
+
+
+### Publishing
+
+#### Releasing with `changesets`
+Publishing is handled using the `changesets` library which starts the process by requiring a manual entry into a running version log. Once you have defined a set of changes as a version change, the automated processes can prepare the library to be published on to `npm`. When the automation has prepared the release, it will create a pull request from a new branch containing the release package. The publishing developer will be required to merge that branch into main, using the pull request, in order to publish a new version.
+
+The step-by-step process is outline below for both Github and Gitlab:
+
+##### Github Steps
+1. **Run `changeset` command**: `npm run changeset` | `bun run changeset` | `pnpm changesets` | `yarn changesets` | `npx @changesets/cli`
+1. **Log version info**: Add a message that describes the changes in this version
+1. **Check in**: Push changes to repo
+1. **Merge**: Merge branch into `main`
+1.  **Merge Automation Branch**: Await repo automation's creation of a new pull request from a newly created branch. Accept the pull request, merging the branch into main.
+
+After automation completes, the new version will be published to `NPM`.
+
+##### Gitlab Steps
+1. **Run `changeset` command**: `npm run changeset` | `bun run changeset` | `pnpm changesets` | `yarn changesets` | `npx @changesets/cli`
+1. **Log version info**: Add a message that describes the changes in this version
+1. **Check in**: Push changes to repo
+1. **Merge**: Merge branch into `main`
+1.  **Merge Automation Branch**: Await repo automation's creation of a new merge request from a newly created branch. Merge the merge request into main.
+
+After automation completes, the new version will be published to `NPM`.
+
+### Dependencies
+
+#### Library Dependencies
+
+
+#### Development Dependencies
+
+##### [`typescript`](https://www.typescriptlang.org/)
+Typescript provides type checking at dev time which adds compile-time safety to the codebase for a wide range of issues. For more information on Typescript, visit its [website](https://www.typescriptlang.org/).
+
+##### [`@changesets/cli`](https://github.com/changesets/changesets)
+The `changesets` library uses a strict process to handle versioning and publishing which makes the update and deployment of any library to NPM a structured and repeatable series of steps. Versioning is managed by a command-line utility which enforces release notes and semantic versions. Publishing is handled automatically by CI/CD pipelines when code is checked in. The structure allows for automated pipelines to handle linting and testing, while requiring manual directives to invoke action. Versions are not accidentally published, because all code changes that haven't been packaged into a changeset are transparent to the library. As soon as a version is updated (by the library), the CI/CD pipelines will trigger and the library developer will need to merge branches in order to complete the publishing. By enforcing these procedures, `changesets` keeps this library releasing traceable and well-versioned packages.
+
+##### [`vite`](https://vite.dev/)
+Vite is a packaging library that includes a lot of features that make development faster and easier. Packaging and minifying are built in as well as "hot module reload" so that saving any source file will reload the script in the development environment instantly. That is made even better because Vite also dynamically swaps typescript references for javascript references, meaning that a development build can target and debug with the typescript files directly. It is also configurable enough to account for a wide variety of project types.
+
+##### [`vite-plugin-dts`](https://www.npmjs.com/package/vite-plugin-dts)
+This plugin for the `vite` library allows the packaging process to also produce a `.d.ts` file to describe all of the Typescript types exposed by the library. Without that export, other projects that use Typescript would not be able to see the full manifest of exported types.
+
+##### [`@rollup/plugin-terser`](https://www.npmjs.com/package/@rollup/plugin-terser)
+This plugin, which was developed for one of `vite`'s dependencies (`rollup`) but is used in this project by `vite`, provides a type of minification that is not supported by the default library. Using this plugin, the library can be packaged with both unminified and minified code, so that developers who implement the library can debug the code in un-minified files, while still being able to ship a minified version without having to minify it in their own projects.
+
+##### [`@magnit-ce/test-runner`](https://github.com/catapart/magnitce-test-runner)
+This library adds custom HTML elements that allow developers to run simple definitions for automated tests directly in a browser. This element is used in the `dev` directory to provide live automated testing.
+
+##### [`glob`](https://www.npmjs.com/package/glob)
+`glob` is a low-level library that provides full-featured search capabilities to a command-line input. These search features are used by this library to differentiate between test files and source files within the `vite.config` files.

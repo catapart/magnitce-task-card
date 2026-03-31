@@ -1,42 +1,45 @@
 {
   "name": "@magnit-ce/task-card",
   "version": "0.0.25",
-  "description": "A custom html element that represents a task and provides an api for task properties.",
-  "type": "module",
-  "main": "dist/task-card.js",
-  "module": "dist/task-card.mjs",
+  "description": "A custom html element that provides sorting and management for custom task-card elements.",
+  "main": "dist/task-card.umd.js",
+  "module": "dist/task-card.js",
   "types": "dist/task-card.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup task-card.ts --format cjs,esm --dts --clean",
-    "copyToDemo": "node -e \"const fs = require('fs'); fs.cpSync('dist', 'demo/dist', {recursive: true});\"",
-    "minify": "tsup task-card.ts --format esm --config ./tsup.config.min.ts --outDir ./dist --minify",
-    "lint": "tsup task-card.ts --format esm --tsconfig ./tsconfig.lint.json",
-    "package": "npm run build && npm run minify && npm run copyToDemo",
-    "release": "npm run package && changeset publish"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "build-tests": "vite build --config vite.config.tests.ts",
+    "changeset": "npx @changesets/cli",
+    "release": "npm run build && npx @changesets/cli publish"
   },
   "keywords": [
     "custom",
     "element",
     "html",
+    "browser",
     "task",
-    "card",
     "task management",
     "list"
   ],
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "@magnit-ce/test-runner": "^0.0.8",
+    "@rollup/plugin-terser": "^1.0.0",
+    "changesets": "^1.0.2",
+    "glob": "^13.0.0",
+    "typescript": "^5.5.3",
+    "vite": "^8.0.0",
+    "vite-plugin-dts": "^4.5.4"
+  },
   "author": "catapart",
   "license": "CC0-1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/catapart/magnitce-task-card"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^2.27.7",
-    "minify": "^11.4.0",
-    "terser": "^5.31.3",
-    "tsup": "^8.2.0",
-    "typescript": "^5.5.3"
   }
 }

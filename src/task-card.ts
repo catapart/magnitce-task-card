@@ -1,22 +1,25 @@
 import style from './task-card.css?raw';
 import html from './task-card.html?raw';
 
-export enum TaskCardEvent
+export const TaskCardEvent =
 {
-    Change = 'change',
-    Remove = 'remove'
-}
+    Change: 'change',
+    Remove: 'remove'
+} as const;
+export type TaskCardEventType = typeof TaskCardEvent[keyof typeof TaskCardEvent];
 
-export enum TaskCardPart
+export const TaskCardPart =
 {
-    Handle = 'handle',
-    ColorLabel = 'color-label',
-    Color = 'color',
-    IsFinished = 'is-finished',
-    Description = 'description',
-    RemoveButton = 'remove-button',
-    RemoveIcon = 'remove-icon',
-}
+    Handle: 'handle',
+    ColorLabel: 'color-label',
+    Color: 'color',
+    IsFinished: 'is-finished',
+    Description: 'description',
+    RemoveButton: 'remove-button',
+    RemoveIcon: 'remove-icon',
+} as const;
+
+export type TaskCardPartType = typeof TaskCardPart[keyof typeof TaskCardPart];
 
 export type TaskCardAttributes = 
 {
@@ -71,7 +74,7 @@ export class TaskCardElement extends HTMLElement
             this.classList.toggle('custom-checkbox', (customCheck != null));
         });
 
-        this.findElement('color').addEventListener('change', (event) =>
+        this.findElement('color').addEventListener('change', (_event) =>
         {
             this.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: true, composed: true, detail: this.#getCardData('color') }));
         });
@@ -87,12 +90,12 @@ export class TaskCardElement extends HTMLElement
             indicator.part.toggle('finished', finished);
         });
         const description = this.findElement('description');
-        description.addEventListener('focus', (event) =>
+        description.addEventListener('focus', (_event) =>
         {
             this.classList.add('focus');
             this.part.add('focus');
         });
-        description.addEventListener('blur', (event) =>
+        description.addEventListener('blur', (_event) =>
         {
             if(this.value != this.#previousValue)
             {
@@ -105,7 +108,7 @@ export class TaskCardElement extends HTMLElement
             this.part.remove('focus');
         });
 
-        this.findElement('remove-button').addEventListener('click', (event) =>
+        this.findElement('remove-button').addEventListener('click', (_event) =>
         {
             this.dispatchEvent(new CustomEvent('remove', { bubbles: true, cancelable: true, composed: true }));
         });
